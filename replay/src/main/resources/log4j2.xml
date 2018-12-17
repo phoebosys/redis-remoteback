@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Configuration status="warn">
+
+    <Appenders>
+        <Console name="err" target="SYSTEM_ERR" >
+            <PatternLayout pattern="%d{HH:mm:ss} %m%n" />
+        </Console>
+        <Console name="out" target="SYSTEM_OUT" >
+            <PatternLayout pattern="%d{HH:mm:ss} %-5p [%C] [%t] - %m%n" />
+        </Console>
+    </Appenders>
+
+    <Loggers>
+        <Logger name="redis" level="info" additivity="false" >
+            <AppenderRef ref="err"/>
+        </Logger>
+        <Root level="debug">
+            <AppenderRef ref="out" />
+        </Root>
+    </Loggers>
+
+</Configuration>

@@ -1,0 +1,5 @@
+rootProject.name = 'redis-remoteback'
+
+include 'proxy'
+include 'replay'
+
