@@ -23,6 +23,7 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.channels.produce
 import kotlinx.coroutines.selects.select
+import ys.phoebos.redis.proxy.sender.Sender
 import java.io.InputStream
 import java.io.InputStreamReader
 import java.lang.Exception
@@ -30,7 +31,7 @@ import java.lang.Exception
 @ExperimentalCoroutinesApi
 class CoroutineWorker(
     private val type: MessageType,
-    private val senders: List<RxSender>,
+    private val senders: List<Sender>,
     reqIn: InputStream,
     rspIn: InputStream,
     private val rsptimeout: Long

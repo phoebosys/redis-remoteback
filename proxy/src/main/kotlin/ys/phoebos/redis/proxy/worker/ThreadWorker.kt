@@ -21,13 +21,14 @@ import ys.phoebos.redis.proxy.MessageType
 import ys.phoebos.redis.proxy.LOG
 import ys.phoebos.redis.proxy.protocol.*
 import ys.phoebos.redis.proxy.sender.RxSender
+import ys.phoebos.redis.proxy.sender.Sender
 import java.io.IOException
 import java.io.InputStream
 import java.io.InputStreamReader
 
 class ThreadWorker(
     private val type: MessageType,
-    private val senders: List<RxSender>,
+    private val senders: List<Sender>,
     reqIn: InputStream,
     rspIn: InputStream
 ) {

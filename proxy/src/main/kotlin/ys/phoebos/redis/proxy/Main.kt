@@ -23,6 +23,7 @@ import ys.phoebos.redis.proxy.worker.ThreadWorker
 import com.moandjiezana.toml.Toml
 import kotlinx.coroutines.*
 import org.slf4j.LoggerFactory
+import ys.phoebos.redis.proxy.sender.Sender
 import java.io.File
 import java.io.IOException
 
@@ -42,7 +43,7 @@ fun main(args: Array<String>) {
         val type = MessageType.valueOf(config.getString(MESSAGE_NAME, MESSAGE_TYPE))
 
         val senderList: List<Toml> = config.getTables(SENDER_NAME)
-        val senders: List<RxSender> = senderList.map { cfg -> Class.forName(cfg.getString(SENDER_CLASS)!!).newInstance() as RxSender }
+        val senders: List<Sender> = senderList.map { cfg -> Class.forName(cfg.getString(SENDER_CLASS)!!).newInstance() as Sender }
         senders.zip(senderList){sender, cfg -> sender.setConfig(type, cfg)}
 
         val (reqSource, rspSource) = Proxy(config).start()
@@ -50,7 +51,7 @@ fun main(args: Array<String>) {
         val rsptimeout = config.getLong(RSP_TIMEOUT_NAME, RSP_TIMEOUT)
         when(config.getString(WORKER_NAME, WORKER_TYPE)) {
             "coroutine" -> CoroutineWorker(type, senders, reqSource, rspSource, rsptimeout).start()
-            "rx" -> RxWorker(type, senders, reqSource, rspSource).start()
+            "rx" -> RxWorker(type, senders as List<RxSender>, reqSource, rspSource).start()
             else -> ThreadWorker(type, senders, reqSource, rspSource).start()
         }
 
