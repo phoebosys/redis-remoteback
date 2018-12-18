@@ -16,31 +16,13 @@
 
 package ys.phoebos.redis.proxy.sender
 
-import ys.phoebos.redis.proxy.LOG
+import com.moandjiezana.toml.Toml
 import ys.phoebos.redis.proxy.MessageType
 import ys.phoebos.redis.proxy.protocol.Talk
-import com.moandjiezana.toml.Toml
-import org.reactivestreams.Subscriber
-import org.reactivestreams.Subscription
 
-abstract class RxSender : Sender, Subscriber<Talk> {
-    private var subscription: Subscription? = null
+interface Sender {
 
-    override fun onSubscribe(s: Subscription) {
-        subscription = s
-        s.request(100)
-    }
+    fun setConfig(type: MessageType, config: Toml)
 
-    override fun onNext(talk: Talk) {
-        send(talk)
-        subscription!!.request(100)
-
-    }
-
-    override fun onError(t: Throwable) {
-        LOG.debug("RxSender onError", t)
-    }
-
-    override fun onComplete() {
-    }
+    fun send(talk: Talk)
 }

@@ -24,7 +24,7 @@ import com.moandjiezana.toml.Toml
 import org.slf4j.LoggerFactory
 
 
-class LogRxSender() : RxSender() {
+class LogRxSender : RxSender() {
 
     private lateinit var type: MessageType
     private lateinit var log: (String) -> Unit

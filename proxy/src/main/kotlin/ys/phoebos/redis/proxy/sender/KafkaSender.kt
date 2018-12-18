@@ -25,13 +25,12 @@ import org.apache.kafka.clients.producer.ProducerRecord
 import org.apache.kafka.common.serialization.ByteArraySerializer
 import org.apache.kafka.common.serialization.StringSerializer
 
-class KafkaSender : RxSender() {
+class KafkaSender : Sender {
 
     private lateinit var type: MessageType
     private lateinit var topic: String
     private lateinit var filter: List<String>
     private lateinit var producer: KafkaProducer<*, *>
-    private val skipChar = listOf('*', '$')
 
     override fun setConfig(type: MessageType, config: Toml) {
         this.type = type
