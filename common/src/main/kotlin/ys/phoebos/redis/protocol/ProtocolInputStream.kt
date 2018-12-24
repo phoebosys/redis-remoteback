@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package ys.phoebos.redis.proxy.protocol
+package ys.phoebos.redis.protocol
 
-import ys.phoebos.redis.proxy.nil
 import com.carrotsearch.hppc.ByteArrayList
+import ys.phoebos.redis.nil
 import java.io.Closeable
 import java.io.EOFException
 import java.io.InputStream

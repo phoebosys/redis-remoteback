@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package ys.phoebos.redis.proxy.protocol
+package ys.phoebos.redis.protocol
 
 
-import ys.phoebos.redis.proxy.CHARSET
-import ys.phoebos.redis.proxy.CRLF
-import ys.phoebos.redis.proxy.nil
+import ys.phoebos.redis.CHARSET
+import ys.phoebos.redis.CRLF
+import ys.phoebos.redis.nil
 import org.apache.commons.text.StringEscapeUtils.ESCAPE_JAVA
 import java.io.IOException
 import java.lang.StringBuilder

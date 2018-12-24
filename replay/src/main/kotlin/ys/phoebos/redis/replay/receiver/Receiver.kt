@@ -14,14 +14,22 @@
  * limitations under the License.
  */
 
-package ys.phoebos.redis.proxy.protocol
+package ys.phoebos.redis.replay.receiver
+
+import com.moandjiezana.toml.Toml
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.channels.ReceiveChannel
+import ys.phoebos.redis.MessageType
+import ys.phoebos.redis.replay.client.Connector
 
 
-import java.lang.IllegalArgumentException
+interface Receiver {
 
-data class Talk(val command: Any, val reply: Any) {
-    init {
-        if (command !is Command && command !is String || reply !is Reply && reply !is String)
-            throw IllegalArgumentException()
-    }
+    fun setConfig(type: MessageType, config: Toml)
+
+    fun open()
+
+    fun close()
+
+    fun receive(): List<Any>
 }

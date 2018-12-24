@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package ys.phoebos.redis.proxy.protocol
+package ys.phoebos.redis.protocol
 
 import com.carrotsearch.hppc.ByteArrayList
 import java.io.IOException

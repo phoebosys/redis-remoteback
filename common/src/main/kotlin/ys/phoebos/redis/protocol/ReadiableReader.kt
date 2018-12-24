@@ -14,12 +14,13 @@
  * limitations under the License.
  */
 
-package ys.phoebos.redis.proxy.protocol
+package ys.phoebos.redis.protocol
 
 import java.io.BufferedReader
 import java.io.Reader
 
-class ReadiableReader(private val reader: Reader, size: Int) : BufferedReader(reader, size), Readiable {
+class ReadiableReader(private val reader: Reader, size: Int) : BufferedReader(reader, size),
+    Readiable {
     constructor(reader: Reader) : this(reader, 8192)
 
     override fun ready(): Boolean {

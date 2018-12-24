@@ -14,10 +14,12 @@
  * limitations under the License.
  */
 
-package ys.phoebos.redis.proxy.protocol
+package com.moandjiezana.toml
 
-import java.io.Closeable
+fun Toml.getInt(key: String): Int? {
+    return getLong(key)?.toInt()
+}
 
-interface Readiable : Closeable {
-    fun ready(): Boolean
+fun Toml.getInt(key: String, defaultValue: Int): Int {
+    return getInt(key) ?: defaultValue
 }

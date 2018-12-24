@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package ys.phoebos.redis.proxy.protocol
+package ys.phoebos.redis.protocol
 
 sealed class State(val state: ByteArray) {
     override fun equals(other: Any?): Boolean {

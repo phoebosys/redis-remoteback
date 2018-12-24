@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package ys.phoebos.redis.proxy.protocol
+package ys.phoebos.redis.protocol
 
-import ys.phoebos.redis.proxy.CHARSET
-import ys.phoebos.redis.proxy.CRLF
+import ys.phoebos.redis.CHARSET
+import ys.phoebos.redis.CRLF
 import org.apache.commons.text.StringEscapeUtils.ESCAPE_JAVA
 import java.lang.StringBuilder
 
@@ -36,9 +36,9 @@ class Command(val cmd: String, private val args: List<String>): Protocolable {
     }
 
     override fun toString(): String {
-        return if (args.isEmpty()) this.cmd
+        return if (args.isEmpty()) this.cmd + CRLF
             else args.joinTo(StringBuilder(cmd).append(' '), separator = "\" \"", prefix = "\"", postfix = "\""
-            ) { ESCAPE_JAVA.translate(it) }.toString()
+            ) { ESCAPE_JAVA.translate(it) }.toString() + CRLF
     }
 
 //    companion object: RedisStream<Command> {

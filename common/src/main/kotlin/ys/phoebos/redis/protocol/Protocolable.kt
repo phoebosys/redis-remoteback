@@ -14,14 +14,9 @@
  * limitations under the License.
  */
 
-package ys.phoebos.redis.proxy.protocol
+package ys.phoebos.redis.protocol
 
-import java.io.InputStream
-import java.io.OutputStream
-
-interface RedisStream<T> {
-
-    fun read(ins: InputStream): T?
-
-    fun write(outs: OutputStream, t: T)
+interface Protocolable {
+    fun toProtocol(): ByteArray
+    fun isNotEmpty(): Boolean
 }

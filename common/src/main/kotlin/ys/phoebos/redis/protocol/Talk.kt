@@ -14,9 +14,14 @@
  * limitations under the License.
  */
 
-package ys.phoebos.redis.proxy.protocol
+package ys.phoebos.redis.protocol
 
-interface Protocolable {
-    fun toProtocol(): ByteArray
-    fun isNotEmpty(): Boolean
+
+import java.lang.IllegalArgumentException
+
+data class Talk(val command: Any, val reply: Any) {
+    init {
+        if (command !is Command && command !is String || reply !is Reply && reply !is String)
+            throw IllegalArgumentException()
+    }
 }
