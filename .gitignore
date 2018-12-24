@@ -25,5 +25,6 @@ hs_err_pid*
 # project
 .idea/
 .gradle/
+common/out/
 proxy/out/
 replay/out/

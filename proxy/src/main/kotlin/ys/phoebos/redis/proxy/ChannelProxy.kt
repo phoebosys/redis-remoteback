@@ -21,6 +21,10 @@ import kotlinx.coroutines.channels.Channel
 import org.netcrusher.core.reactor.NioReactor
 import org.netcrusher.tcp.TcpCrusher
 import org.netcrusher.tcp.TcpCrusherBuilder
+import ys.phoebos.redis.CONN_IP
+import ys.phoebos.redis.CONN_IP_NAME
+import ys.phoebos.redis.CONN_PORT
+import ys.phoebos.redis.CONN_PORT_NAME
 
 class ChannelProxy (private val config: Toml) {
     private val reqChannel = Channel<ByteArray>()

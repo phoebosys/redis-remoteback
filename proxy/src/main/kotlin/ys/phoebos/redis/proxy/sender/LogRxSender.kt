@@ -16,12 +16,12 @@
 
 package ys.phoebos.redis.proxy.sender
 
-import ys.phoebos.redis.proxy.*
-import ys.phoebos.redis.proxy.protocol.Command
-import ys.phoebos.redis.proxy.protocol.Reply
-import ys.phoebos.redis.proxy.protocol.Talk
 import com.moandjiezana.toml.Toml
 import org.slf4j.LoggerFactory
+import ys.phoebos.redis.*
+import ys.phoebos.redis.protocol.Command
+import ys.phoebos.redis.protocol.Reply
+import ys.phoebos.redis.protocol.Talk
 
 
 class LogRxSender : RxSender() {
@@ -46,9 +46,9 @@ class LogRxSender : RxSender() {
         when (type) {
             MessageType.PROTOCOL -> {
                 if ((talk.command as Command).isNotEmpty())
-                    log("--> ${String(talk.command.toProtocol())}")
+                    log("--> ${String((talk.command as Command).toProtocol())}")
                 if ((talk.reply as Reply).isNotEmpty())
-                    log("<-- ${String(talk.reply.toProtocol())}")
+                    log("<-- ${String((talk.reply as Reply).toProtocol())}")
             }
             MessageType.STRING -> {
                 if ((talk.command as Command).isNotEmpty())

@@ -16,11 +16,10 @@
 
 package ys.phoebos.redis.proxy.worker
 
-import ys.phoebos.redis.proxy.CHARSET
-import ys.phoebos.redis.proxy.MessageType
+import ys.phoebos.redis.CHARSET
+import ys.phoebos.redis.MessageType
+import ys.phoebos.redis.protocol.*
 import ys.phoebos.redis.proxy.LOG
-import ys.phoebos.redis.proxy.protocol.*
-import ys.phoebos.redis.proxy.sender.RxSender
 import ys.phoebos.redis.proxy.sender.Sender
 import java.io.IOException
 import java.io.InputStream

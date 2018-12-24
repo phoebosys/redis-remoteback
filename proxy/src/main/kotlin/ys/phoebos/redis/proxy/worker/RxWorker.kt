@@ -16,16 +16,16 @@
 
 package ys.phoebos.redis.proxy.worker
 
-import ys.phoebos.redis.proxy.CHARSET
 import ys.phoebos.redis.proxy.LOG
-import ys.phoebos.redis.proxy.MessageType
-import ys.phoebos.redis.proxy.protocol.*
 import ys.phoebos.redis.proxy.sender.RxSender
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.FlowableOnSubscribe
 import io.reactivex.functions.BiFunction
 import io.reactivex.schedulers.Schedulers
+import ys.phoebos.redis.CHARSET
+import ys.phoebos.redis.MessageType
+import ys.phoebos.redis.protocol.*
 import java.io.InputStream
 import java.io.InputStreamReader
 
@@ -53,7 +53,7 @@ class RxWorker(
 
     fun start() {
         val ns = ""
-        val commandFlow = Flowable.create(FlowableOnSubscribe<Talk> {emitter ->
+        val commandFlow = Flowable.create(FlowableOnSubscribe<Talk> { emitter ->
             while (!emitter.isCancelled) {
                 try {
                     val command = when (type) {

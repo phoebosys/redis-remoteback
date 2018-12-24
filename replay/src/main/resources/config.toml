@@ -1,38 +1,16 @@
-bindip = "127.0.0.1"
-bindport = 6666
-
-connip = "127.0.0.1"
-connport = 6379
-
 # "PROTOCOL": redis protocol, "STRING": readable command & reply, "ROW" : row lines
-message = "STRING"
-
+message = "PROTOCOL"
 # thread: ThWorker, rx: RxWorker, coroutine: CoroutineWorker
 worker = "coroutine"
 
-rsptimeout = 100    #ms
-
-[[sender]]
-class = "ys.phoebos.redis.proxy.sender.LogRxSender"
-logger = "redis"
-level = "info"
-
-
-[[sender]]
-class = "ys.phoebos.redis.proxy.sender.KafkaSender"
-# write commands
-filter = ["append", "bitfield", "bitop", "blpop", "brpop", "brpoplpush", "bzpopmax", "bzpopmin", "decr", "decrby", "del",
-          "expire", "expireat", "flushall", "flushdb", "geoadd", "georadius", "georadiusbymember", "getset", "hdel",
-          "hincrby", "hincrbyfloat", "hmset", "hset", "hsetnx", "incr", "incrby", "incrbyfloat", "linsert", "lpop",
-          "lpush", "lpushx", "lrem", "lset", "ltrim", "migrate", "move", "mset", "msetnx", "persist", "pexpire",
-          "pexpireat", "pfadd", "pfdebug", "pfmerge", "psetex", "rename", "renamenx", "restore", "restore-asking",
-          "rpop", "rpoplpush", "rpush", "rpushx", "sadd", "sdiffstore", "set", "setbit", "setex", "setnx", "setrange",
-          "sinterstore", "smove", "sort", "spop", "srem", "sunionstore", "swapdb", "unlink", "xack", "xadd", "xclaim",
-          "xdel", "xgroup", "xreadgroup", "xsetid", "xtrim", "zadd", "zincrby", "zinterstore", "zpopmax", "zpopmin",
-          "zrem", "zremrangebylex", "zremrangebyrank", "zremrangebyscore", "zunionstore"]
+[receiver]
+class = "ys.phoebos.redis.replay.receiver.KafkaReceiver"
+polltimeout = 100    #ms
 
 topic = "redis"
 bootstrap-servers = "127.0.0.1:9092"
-acks = "1"
-compression-type = "none"
-retries = "0"
+group-id = "redisremote"
+
+[redis]
+connip = "127.0.0.1"
+connport = 6379

@@ -17,8 +17,8 @@
 package ys.phoebos.redis.proxy.sender
 
 import com.moandjiezana.toml.Toml
-import ys.phoebos.redis.proxy.MessageType
-import ys.phoebos.redis.proxy.protocol.Talk
+import ys.phoebos.redis.MessageType
+import ys.phoebos.redis.protocol.Talk
 
 interface Sender {
 

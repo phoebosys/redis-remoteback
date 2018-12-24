@@ -20,6 +20,10 @@ import com.moandjiezana.toml.Toml
 import org.netcrusher.core.reactor.NioReactor
 import org.netcrusher.tcp.TcpCrusher
 import org.netcrusher.tcp.TcpCrusherBuilder
+import ys.phoebos.redis.CONN_IP
+import ys.phoebos.redis.CONN_IP_NAME
+import ys.phoebos.redis.CONN_PORT
+import ys.phoebos.redis.CONN_PORT_NAME
 import java.io.*
 
 class Proxy (private val config: Toml) {

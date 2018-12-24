@@ -17,11 +17,9 @@
 package ys.phoebos.redis.proxy.sender
 
 import ys.phoebos.redis.proxy.LOG
-import ys.phoebos.redis.proxy.MessageType
-import ys.phoebos.redis.proxy.protocol.Talk
-import com.moandjiezana.toml.Toml
 import org.reactivestreams.Subscriber
 import org.reactivestreams.Subscription
+import ys.phoebos.redis.protocol.Talk
 
 abstract class RxSender : Sender, Subscriber<Talk> {
     private var subscription: Subscription? = null

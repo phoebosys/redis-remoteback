@@ -5,7 +5,7 @@ connip = "127.0.0.1"
 connport = 6379
 
 # "PROTOCOL": redis protocol, "STRING": readable command & reply, "ROW" : row lines
-message = "STRING"
+message = "PROTOCOL"
 
 # thread: ThWorker, rx: RxWorker, coroutine: CoroutineWorker
 worker = "coroutine"

@@ -18,6 +18,8 @@ compileTestKotlin {
 }
 
 dependencies {
+    implementation project(':common')
+    
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.0.1'
 
@@ -27,12 +29,8 @@ dependencies {
 
     implementation 'io.reactivex.rxjava2:rxkotlin:2.3.0'
 
-    implementation 'org.apache.commons:commons-text:1.6'
-    implementation 'com.carrotsearch:hppc:0.8.1'
-
     implementation 'org.apache.kafka:kafka-clients:2.1.0'
-
-
+    
     implementation 'org.slf4j:slf4j-api:1.7.25'
     implementation 'org.slf4j:jcl-over-slf4j:1.7.25'
     implementation 'org.slf4j:jul-to-slf4j:1.7.25'

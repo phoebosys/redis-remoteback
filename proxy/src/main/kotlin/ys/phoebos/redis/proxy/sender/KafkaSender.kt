@@ -17,13 +17,16 @@
 package ys.phoebos.redis.proxy.sender
 
 import ys.phoebos.redis.proxy.*
-import ys.phoebos.redis.proxy.protocol.Command
-import ys.phoebos.redis.proxy.protocol.Talk
 import com.moandjiezana.toml.Toml
 import org.apache.kafka.clients.producer.KafkaProducer
 import org.apache.kafka.clients.producer.ProducerRecord
 import org.apache.kafka.common.serialization.ByteArraySerializer
 import org.apache.kafka.common.serialization.StringSerializer
+import ys.phoebos.redis.KAFKA_TOPIC
+import ys.phoebos.redis.KAFKA_TOPIC_NAME
+import ys.phoebos.redis.MessageType
+import ys.phoebos.redis.protocol.Command
+import ys.phoebos.redis.protocol.Talk
 
 class KafkaSender : Sender {
 
@@ -37,7 +40,7 @@ class KafkaSender : Sender {
         this.filter = config.getList<String>(FILTER_NAME, FILTER)
         this.topic = config.getString(KAFKA_TOPIC_NAME, KAFKA_TOPIC)
         val kafkaConfig = config.toMap()
-            .filterKeys { it != FILTER_NAME && it != SENDER_CLASS && it != CLIENT_ID && it != KAFKA_TOPIC_NAME}
+            .filterKeys { it !in listOf(FILTER_NAME, SENDER_CLASS, KAFKA_TOPIC_NAME) }
             .mapKeys { it.key.replace('-', '.') }
 
         when (type) {
@@ -53,14 +56,14 @@ class KafkaSender : Sender {
     override fun send(talk: Talk) {
         when (type) {
             MessageType.PROTOCOL -> {
-                if ((talk.command as Command).isNotEmpty() && (filter.isEmpty() || filter.contains(talk.command.cmd))) {
-                    val res = (producer as KafkaProducer<ByteArray, ByteArray>).send(ProducerRecord(topic, talk.command.toProtocol())).get()
-                    LOG.debug("SEND -> ${String(talk.command.toProtocol())} ${if(res.hasOffset()) "offset=${res.offset()}" else ""} size=${res.serializedValueSize()} pattern=${res.partition()}")
+                if ((talk.command as Command).isNotEmpty() && (filter.isEmpty() || filter.contains((talk.command as Command).cmd))) {
+                    val res = (producer as KafkaProducer<ByteArray, ByteArray>).send(ProducerRecord(topic, (talk.command as Command).toProtocol())).get()
+                    LOG.debug("SEND -> ${String((talk.command as Command).toProtocol())} ${if(res.hasOffset()) "offset=${res.offset()}" else ""} size=${res.serializedValueSize()} pattern=${res.partition()}")
                 } else
-                    LOG.debug("SKIP -> ${String(talk.command.toProtocol())}")
+                    LOG.debug("SKIP -> ${String((talk.command as Command).toProtocol())}")
             }
             MessageType.STRING -> {
-                if ((talk.command as Command).isNotEmpty() && (filter.isEmpty() || filter.contains(talk.command.cmd))) {
+                if ((talk.command as Command).isNotEmpty() && (filter.isEmpty() || filter.contains((talk.command as Command).cmd))) {
                     val res = (producer as KafkaProducer<String, String>).send(ProducerRecord(topic, talk.command.toString())).get()
                     LOG.debug("SEND -> ${talk.command} ${if (res.hasOffset()) "offset=${res.offset()}" else ""} size=${res.serializedValueSize()} pattern=${res.partition()}")
                 } else
@@ -68,9 +71,9 @@ class KafkaSender : Sender {
             }
             MessageType.ROW -> {
                 if ((talk.command as String).isNotEmpty()) {
-                    if (filter.isEmpty() || filter.contains(talk.command.split(' ')[0])) {
+                    if (filter.isEmpty() || filter.contains((talk.command as String).split(' ')[0])) {
                         val res =
-                            (producer as KafkaProducer<String, String>).send(ProducerRecord(topic, talk.command)).get()
+                            (producer as KafkaProducer<String, String>).send(ProducerRecord(topic, talk.command as String)).get()
                         LOG.debug("SEND -> ${talk.command} ${if (res.hasOffset()) "offset=${res.offset()}" else ""} size=${res.serializedValueSize()} pattern=${res.partition()}")
                     } else
                         LOG.debug("SKIP -> ${talk.command}")
